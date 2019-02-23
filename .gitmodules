@@ -1,0 +1,3 @@
+[submodule "stm8flash"]
+	path = stm8flash
+	url = https://github.com/vdudouyt/stm8flash.git
