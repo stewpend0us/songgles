@@ -1,5 +1,5 @@
 
-# songles (sonar goggles)
+# songgles (sonar goggles)
 A project to hopefully help my recently gone blind dog (Navi) stop running into things. It's basically a backup sensor that I plan to install on her face somewhere.
 
 ## hardware:
