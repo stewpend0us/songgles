@@ -3,9 +3,9 @@
 int main(void)
 {
 	int d;
-	do
+	while(1)
 	{
 		for(d=0; d<10000; d++) { }
-	} while(1);
+	}
 }
 	
