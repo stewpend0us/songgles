@@ -5,11 +5,12 @@ A project to hopefully help my recently gone blind dog (Navi) stop running into 
 - [sonar](https://www.velleman.eu/products/view/?id=435526)
 - [beeper](https://www.velleman.eu/products/view/?id=435552)
 - [programmer](https://www.amazon.com/ST-Link-Emulator-Downloader-Programming-Random/dp/B00RYVLN4U)
+
 I removed the beeper from its breakout board and removed the IO pins from the sonar board. The beeper pins were perfectly spaced to fit between the ground and echo pins on the sonar board so I just soldered it directly in. The beeper pin indcated with a + is connected to echo. I also added some bits of wire to the "G", "S", "R", "V" pads on the sonar board. These are connected to the "GND", "SWIM", "RST", and "5.0V" pins on the programmer.
 
 ## I'm assuming these things are installed:
 - [libusb-dev](https://libusb.info) required by stm8flash
-- [sdcc](http://sdcc.sourceforge.net/) #required to build for stm8
+- [sdcc](http://sdcc.sourceforge.net/) required to build for stm8
 
 ## do stuff:
 ```bash
