@@ -1,15 +1,8 @@
-#include "stm8l.h"
+#include "songgles.h"
 
 void main(void)
 {
-	int d;
-	PD_DDR = 0xff;
-	PD_CR1 = 0xff;
-	while(1)
-	{
-		PD_ODR = 0x00;
-		for( d=0; d<29000; d++ )
-		{
-		}
-	}
+	PD_DDR = (1 << 6);
+	PD_CR1 = (1 << 6);
+	PD_ODR = 0;
 }

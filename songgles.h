@@ -6,3 +6,4 @@
 #define PD_CR2 *(unsigned char*)0x5013
 
 #define TOGGLE_PD6() __asm__("bcpl 0x500F, #6")
+#define OFF_PD6() __asm__("bres 0x500F, #6")
