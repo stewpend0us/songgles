@@ -20,10 +20,10 @@ make flash OBJECT=songgles #flash the songles program
 ```
 
 ## helpful links:
-- [programming manual](https://www.st.com/content/ccc/resource/technical/document/programming_manual/43/24/13/9a/89/df/45/ed/CD00161709.pdf/files/CD00161709.pdf/jcr:content/translations/en.CD00161709.pdf)
-- [reference manual](https://www.st.com/content/ccc/resource/technical/document/reference_manual/9a/1b/85/07/ca/eb/4f/dd/CD00190271.pdf/files/CD00190271.pdf/jcr:content/translations/en.CD00190271.pdf)
-- [datasheet](https://www.st.com/resource/en/datasheet/stm8s003k3.pdf)
+- [programming manual](https://www.st.com/content/ccc/resource/technical/document/programming_manual/43/24/13/9a/89/df/45/ed/CD00161709.pdf/files/CD00161709.pdf/jcr:content/translations/en.CD00161709.pdf) Instruction set
+- [datasheet](https://www.st.com/resource/en/datasheet/stm8s003k3.pdf) Register map
+- [reference manual](https://www.st.com/content/ccc/resource/technical/document/reference_manual/9a/1b/85/07/ca/eb/4f/dd/CD00190271.pdf/files/CD00190271.pdf/jcr:content/translations/en.CD00190271.pdf) Register configuration
 - [sonar schematic](https://www.velleman.eu/downloads/29/infosheets/vma306_scheme.pdf)
 - [stm8flash](https://github.com/vdudouyt/stm8flash)
-- [sdcc/stm8 examples](https://github.com/vdudouyt/sdcc-examples-stm8)
-- [sdcc/mixing c and assembly](https://lujji.github.io/blog/mixing-c-and-assembly-on-stm8/)
+- [sdcc stm8 examples](https://github.com/vdudouyt/sdcc-examples-stm8)
+- [sdcc mixing c and assembly](https://lujji.github.io/blog/mixing-c-and-assembly-on-stm8/)
