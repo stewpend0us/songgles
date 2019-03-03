@@ -27,7 +27,6 @@ static inline void setup_clock()
 
 static void setup_TIM1()
 {
-	sim();
 	TIM1_PSCRH = 0x00;
 	TIM1_PSCRL = 0x03;
 	TIM1_ARRH = 0x00;
@@ -35,13 +34,13 @@ static void setup_TIM1()
 	TIM1_CR1 |= 0x80;
 	TIM1_CCR1H = 0x00;
 	TIM1_CCR1L = 0x00;
-	TIM1_IER = 0x01;
-	rim();
+	TIM1_IER |= 0x01;
 }
 
 void tim1_overflow(void) __interrupt(11)
 {
 	PD_ODR ^= 0x40;
+	TIM1_SR1 &= ~0x01;
 }
 
 int main(void)
@@ -50,6 +49,7 @@ int main(void)
 	sim();
 	setup_clock();
 	setup_io();
+	setup_TIM1();
 	rim();
 
 	TIM1_CR1 |= 0x01;
