@@ -19,24 +19,37 @@ static inline void setup_clock()
 	CLK_SWCR &= ~0x04; //0 SWIEN
 	CLK_SWR = 0xB4; //HSE clock source
 	//TODO
-	CLK_CKDIVR = 0x18; // probably don't need to do this
-	while ( !(CLK_SWCR & 0x08) ) {} // probably don't need to do this
+//	CLK_CKDIVR = 0x18; // probably don't need to do this
+//	while ( !(CLK_SWCR & 0x08) ) {} // probably don't need to do this
 	CLK_ICKR &= ~0x01; // disable high-speed internal RC
 }
 
 static void setup_TIM1()
 {
-	TIM1_PSCRH = 0xFF;
+	TIM1_PSCRH = 0x09;
 	TIM1_PSCRL = 0xFF;
-	TIM1_ARRH = 0x00;
+	TIM1_ARRH = 0x0F;
 	TIM1_ARRL = 0xFF;
 	TIM1_CR1 |= 0x80;
 	TIM1_IER |= 0x01;
 }
 
+char counter;
 void tim1_overflow(void) __interrupt(11)
 {
-	PD_ODR ^= 0x40;
+	counter++;
+	if (counter <= 4)
+	{
+		PD_ODR ^= 0x40;
+		TIM1_SR1 &= ~0x01;
+		return;
+	}
+//	PD_ODR &= ~0x40;
+
+	if (counter > 6)
+		counter = 0;
+
+//	PD_ODR ^= 0x40;
 	TIM1_SR1 &= ~0x01;
 }
 
@@ -51,8 +64,9 @@ int main(void)
 
 	TIM1_CR1 |= 0x01;
 
-	int d, e = 1;
+	counter = 0;
 	for(;;)
 	{
+		wfi();
 	}
 }

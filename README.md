@@ -30,16 +30,27 @@ make flash OBJECT=songgles #flash the songles program
 - [sdcc mixing c and assembly](https://lujji.github.io/blog/mixing-c-and-assembly-on-stm8/)
 
 ## notes:
-1) I downloaded the program installed on the sonar when I got it and used a reverse assembler to get to something I could read. I reverse engineered that a bit to learn how this stuff works and also give me a reference for getting this thing working with my own code. I'm not going to put any of that here...but it wasn't hard. Do it yourself. I learend a lot.
+1) I extracted the program installed on the sonar when I got it and used a reverse assembler to get to something I could read. I reverse engineered that a bit to learn how this stuff works and also give me a reference for getting this thing working with my own code. I'm not going to put any of that here...but it wasn't hard. I learend a lot.
 
-2) The advertized range is 2-450cm. That's (roughly) 120-27150microseconds for a round trip. The [sparkfun version](https://www.sparkfun.com/products/13959) claims an "8 cycle sonic burst". That leaves us 15 microseconds per burst if we want to get them all off before we start listening for the echo. I have no idea if that's a resonable amount of time. They have their prescaler (TIM1_PSCR) set to 3 and their auto-reload (TIM1_ARR) set to 48. 1/(16MHz/(3))\*48 = 9microseconds. At the moment it's not clear to me if they're really using the timer to drive the emitter or if they're just looping. There seems to be a lot of code for something that appears to be pretty straight forward? If [this](https://www.velleman.eu/products/view/?id=11889) is the emitter it has a "nominal frequency" of 40kHz.
+2) The advertized range is 2-450cm. That's (roughly) 120-27150microseconds for a round trip. The [sparkfun version](https://www.sparkfun.com/products/13959) claims an "8 cycle sonic burst". That leaves us 15 microseconds per burst if we want to get them all off before we start listening for the echo. I have no idea if that's a resonable amount of time. They have their prescaler (TIM1_PSCR) set to 3 and their auto-reload (TIM1_ARR) set to 48. 1/(16MHz/(3))\*48 = 9microseconds. At the moment it's not clear to me if they're really using the timer to drive the emitter or if they're just looping. There seems to be a lot of code for something that appears to be pretty straight forward? If [this](https://www.velleman.eu/products/view/?id=11889) is the emitter it has a "nominal frequency" of 40kHz. 1/40kHz = 25 microseconds. So something doesn't add up. I'm going to go with a 25 microsecond period and 8 pulses since I don't care too much about close range.
 
 Timeline:
 ```
-     start           wall            echo
-     |-------2cm---->|-------2cm---->|
+     start           wall            first echo
+     |-----3.3cm---->|-----3.3cm---->|
       _   _   _   _   _   _   _   _
-     | |_| |_| |_| |_| |_| |_| |_| |_______________________________________________
-     |15-|15-|15-|15-|15-|15-|15-|15-|
-     |-------------120ms-------------|
+     | |_| |_| |_| |_| |_| |_| |_| |_______________________________________
+     |25-|25-|25-|25-|25-|25-|25-|25-|
+     |-------------200ms-------------|
+                                      _   _   _   _   _   _   _   _
+     ________________________________/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_______
+     
+     |/|/|/|/|/|/|/|/|/|/|/|/|/|/|/|_______________________________________
+     
+                                    .
+                              .     |
+                        .           |
+                  .                 |
+            .                       |
+      .                             |______________________________________
 ```

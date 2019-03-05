@@ -1,5 +1,9 @@
 #include "songgles.h"
 
+char state;
+
+enum state { WAIT, CHIRP, LISTEN, BEEP, };
+
 static inline void setup_io()
 {
 	
@@ -19,33 +23,39 @@ static inline void setup_clock()
 	CLK_SWCR |= 0x02; //set SWEN
 	CLK_SWCR &= ~0x04; //0 SWIEN
 	CLK_SWR = 0xB4; //HSE clock source
-	//TODO
-	CLK_CKDIVR = 0x18; // probably don't need to do this
-	while ( !(CLK_SWCR & 0x08) ) {} // probably don't need to do this
+//	CLK_CKDIVR = 0x18; // probably don't need to do this
+//	while ( !(CLK_SWCR & 0x08) ) {} // probably don't need to do this
 	CLK_ICKR &= ~0x01; // disable high-speed internal RC
 }
 
 static void setup_TIM1()
 {
-	TIM1_PSCRH = 0x00;
-	TIM1_PSCRL = 0x03;
-	TIM1_ARRH = 0x00;
-	TIM1_ARRL = 0x30;
-	TIM1_CR1 |= 0x80;
-	TIM1_CCR1H = 0x00;
-	TIM1_CCR1L = 0x00;
-	TIM1_IER |= 0x01;
+	TIM1_PSCRH = 0;
+	TIM1_PSCRL = 2;
+	TIM1_ARRH = 0;
+	TIM1_ARRL = 100;
+	TIM1_CR1 |= 0x80; // use ARR preload registers
+//	TIM1_IER |= 0x01; // enable interrupt
 }
 
-void tim1_overflow(void) __interrupt(11)
+void tim1_update(void) __interrupt(11)
 {
-	PD_ODR ^= 0x40;
+	PC_ODR ^= 0x40;
+	PC_ODR ^= 0x08;
 	TIM1_SR1 &= ~0x01;
+}
+
+void tim4_update(void) __interrupt(23)
+{
+	// overall timer gets hit once per second? ish?
+	TIM2_IER &= ~0x01; // disable TIM2 interrupt
+
+	PC_ODR |= 0x08; // start the chirp
+	TIM1_IER |= 0x01; // enable TIM1 interrupt
 }
 
 int main(void)
 {
-//	int d;
 	sim();
 	setup_clock();
 	setup_io();
@@ -54,9 +64,21 @@ int main(void)
 
 	TIM1_CR1 |= 0x01;
 
-	int d, e = 1;
+	state = WAIT;
 	for(;;)
 	{
+		switch state
+		{
+			case WAIT:
+				wfi();
+				break;
+			case CHIRP:
+				break;
+			case LISTEN:
+				break;
+			case BEEP:
+				break;
+		}
 	}
 }
 
